@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ProjectTagsRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ProjectTagRepository")
  * @ORM\Table(name="project_tags")
+ * @ORM\HasLifecycleCallbacks()
  */
-class ProjectTags
+class ProjectTag
 {
     /**
      * @ORM\Id
@@ -58,7 +58,7 @@ class ProjectTags
 
     /**
      * @param mixed $id
-     * @return ProjectTags
+     * @return ProjectTag
      */
     public function setId($id)
     {
@@ -76,9 +76,9 @@ class ProjectTags
 
     /**
      * @param Project[] $projects
-     * @return ProjectTags
+     * @return ProjectTag
      */
-    public function setProjects(array $projects): ProjectTags
+    public function setProjects(array $projects): ProjectTag
     {
         $this->projects = $projects;
         return $this;
@@ -94,9 +94,9 @@ class ProjectTags
 
     /**
      * @param string $tag
-     * @return ProjectTags
+     * @return ProjectTag
      */
-    public function setTag(string $tag): ProjectTags
+    public function setTag(string $tag): ProjectTag
     {
         $this->tag = $tag;
         return $this;
@@ -112,9 +112,9 @@ class ProjectTags
 
     /**
      * @param int $status
-     * @return ProjectTags
+     * @return ProjectTag
      */
-    public function setStatus(int $status): ProjectTags
+    public function setStatus(int $status): ProjectTag
     {
         $this->status = $status;
         return $this;
@@ -130,9 +130,9 @@ class ProjectTags
 
     /**
      * @param \DateTime $created
-     * @return ProjectTags
+     * @return ProjectTag
      */
-    public function setCreated(\DateTime $created): ProjectTags
+    public function setCreated(\DateTime $created): ProjectTag
     {
         $this->created = $created;
         return $this;
@@ -148,9 +148,9 @@ class ProjectTags
 
     /**
      * @param \DateTime $modified
-     * @return ProjectTags
+     * @return ProjectTag
      */
-    public function setModified(\DateTime $modified): ProjectTags
+    public function setModified(\DateTime $modified): ProjectTag
     {
         $this->modified = $modified;
         return $this;
@@ -174,5 +174,17 @@ class ProjectTags
             array_splice($this->projects, $key, 1);
         }
         $project->removeProjectTag($this);
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setDates(): void
+    {
+        if (!($this->created instanceof \DateTime)) {
+            $this->created = new \DateTime();
+        }
+
+        $this->modified = new \DateTime();
     }
 }

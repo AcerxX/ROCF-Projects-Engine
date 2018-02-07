@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
  * @ORM\Table(name="project")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Project
 {
@@ -47,6 +47,26 @@ class Project
     private $pledgedAmmount;
 
     /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $cardImage;
+
+    /**
+     * @var Location
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Location")
+     * @ORM\JoinColumn(name="location_id", referencedColumnName="id")
+     */
+    private $location;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
+    private $expirationDate;
+
+    /**
      * @var int
      * @ORM\Column(type="integer")
      */
@@ -83,8 +103,8 @@ class Project
     private $modified;
 
     /**
-     * @var ProjectTags[]
-     * @ORM\ManyToMany(targetEntity="App\Entity\ProjectTags", inversedBy="projects")
+     * @var ProjectTag[]
+     * @ORM\ManyToMany(targetEntity="App\Entity\ProjectTag", inversedBy="projects")
      * @ORM\JoinTable(name="projects_to_tags")
      */
     private $projectTags;
@@ -288,7 +308,7 @@ class Project
     }
 
     /**
-     * @return ProjectTags[]
+     * @return ProjectTag[]
      */
     public function getProjectTags(): array
     {
@@ -296,7 +316,7 @@ class Project
     }
 
     /**
-     * @param ProjectTags[] $projectTags
+     * @param ProjectTag[] $projectTags
      * @return Project
      */
     public function setProjectTags(array $projectTags): Project
@@ -306,22 +326,89 @@ class Project
     }
 
     /**
-     * @param ProjectTags $projectTag
+     * @param ProjectTag $projectTag
      */
-    public function addProjectTag(ProjectTags $projectTag): void
+    public function addProjectTag(ProjectTag $projectTag): void
     {
         $this->projectTags[] = $projectTag;
         $projectTag->addProject($this);
     }
 
     /**
-     * @param ProjectTags $projectTag
+     * @param ProjectTag $projectTag
      */
-    public function removeProjectTag(ProjectTags $projectTag): void
+    public function removeProjectTag(ProjectTag $projectTag): void
     {
         if (false !== $key = array_search($projectTag, $this->projectTags, true)) {
             array_splice($this->projectTags, $key, 1);
         }
         $projectTag->removeProject($this);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCardImage(): string
+    {
+        return $this->cardImage;
+    }
+
+    /**
+     * @param string $cardImage
+     * @return Project
+     */
+    public function setCardImage(string $cardImage): Project
+    {
+        $this->cardImage = $cardImage;
+        return $this;
+    }
+
+    /**
+     * @return Location
+     */
+    public function getLocation(): Location
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param Location $location
+     * @return Project
+     */
+    public function setLocation(Location $location): Project
+    {
+        $this->location = $location;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getExpirationDate(): \DateTime
+    {
+        return $this->expirationDate;
+    }
+
+    /**
+     * @param \DateTime $expirationDate
+     * @return Project
+     */
+    public function setExpirationDate(\DateTime $expirationDate): Project
+    {
+        $this->expirationDate = $expirationDate;
+        return $this;
+    }
+
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setDates(): void
+    {
+        if (!($this->created instanceof \DateTime)) {
+            $this->created = new \DateTime();
+        }
+
+        $this->modified = new \DateTime();
     }
 }

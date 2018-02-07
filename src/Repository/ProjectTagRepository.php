@@ -2,15 +2,15 @@
 
 namespace App\Repository;
 
-use App\Entity\ProjectTags;
+use App\Entity\ProjectTag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class ProjectTagsRepository extends ServiceEntityRepository
+class ProjectTagRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, ProjectTags::class);
+        parent::__construct($registry, ProjectTag::class);
     }
 
     /*
