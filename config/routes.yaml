@@ -1,3 +1,4 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+addProject:
+    path: /addProject
+    controller: App\Controller\ProjectController::addProject
+    methods: [POST]

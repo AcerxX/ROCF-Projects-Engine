@@ -38,13 +38,13 @@ class Project
      * @var int
      * @ORM\Column(type="integer")
      */
-    private $totalAmmount;
+    private $totalAmount;
 
     /**
      * @var int
      * @ORM\Column(type="integer")
      */
-    private $pledgedAmmount;
+    private $pledgedAmount = 0;
 
     /**
      * @var string
@@ -53,12 +53,12 @@ class Project
     private $cardImage;
 
     /**
-     * @var Location
+     * @var City
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Location")
-     * @ORM\JoinColumn(name="location_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="City")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
-    private $location;
+    private $city;
 
     /**
      * @var \DateTime
@@ -166,36 +166,36 @@ class Project
     /**
      * @return int
      */
-    public function getTotalAmmount(): int
+    public function getTotalAmount(): int
     {
-        return $this->totalAmmount;
+        return $this->totalAmount;
     }
 
     /**
-     * @param int $totalAmmount
+     * @param int $totalAmount
      * @return Project
      */
-    public function setTotalAmmount(int $totalAmmount): Project
+    public function setTotalAmount(int $totalAmount): Project
     {
-        $this->totalAmmount = $totalAmmount;
+        $this->totalAmount = $totalAmount;
         return $this;
     }
 
     /**
      * @return int
      */
-    public function getPledgedAmmount(): int
+    public function getPledgedAmount(): int
     {
-        return $this->pledgedAmmount;
+        return $this->pledgedAmount;
     }
 
     /**
-     * @param int $pledgedAmmount
+     * @param int $pledgedAmount
      * @return Project
      */
-    public function setPledgedAmmount(int $pledgedAmmount): Project
+    public function setPledgedAmount(int $pledgedAmount): Project
     {
-        $this->pledgedAmmount = $pledgedAmmount;
+        $this->pledgedAmount = $pledgedAmount;
         return $this;
     }
 
@@ -364,20 +364,20 @@ class Project
     }
 
     /**
-     * @return Location
+     * @return City
      */
-    public function getLocation(): Location
+    public function getCity(): City
     {
-        return $this->location;
+        return $this->city;
     }
 
     /**
-     * @param Location $location
+     * @param City $city
      * @return Project
      */
-    public function setLocation(Location $location): Project
+    public function setCity(City $city): Project
     {
-        $this->location = $location;
+        $this->city = $city;
         return $this;
     }
 

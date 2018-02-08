@@ -2,17 +2,10 @@
 
 namespace App\Repository;
 
-use App\Entity\Location;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\ORM\EntityRepository;
 
-class LocationRepository extends ServiceEntityRepository
+class CityRepository extends EntityRepository
 {
-    public function __construct(RegistryInterface $registry)
-    {
-        parent::__construct($registry, Location::class);
-    }
-
     /*
     public function findBySomething($value)
     {
