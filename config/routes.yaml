@@ -1,4 +1,9 @@
 addProject:
-    path: /addProject
+    path: /add-project
     controller: App\Controller\ProjectController::addProject
     methods: [POST]
+
+getCategories:
+    path: /get-categories
+    controller: App\Controller\CategoryController::getCategories
+    methods: [GET]
