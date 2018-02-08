@@ -3,6 +3,11 @@ addProject:
     controller: App\Controller\ProjectController::addProject
     methods: [POST]
 
+getProject:
+    path: /get-project
+    controller: App\Controller\ProjectController::getProject
+    methods: [GET]
+
 getCategories:
     path: /get-categories
     controller: App\Controller\CategoryController::getCategories

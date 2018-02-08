@@ -27,4 +27,28 @@ class ProjectController extends Controller
 
         return new JsonResponse($response);
     }
+
+    /**
+     * @param Request $request
+     * @param ProjectService $projectService
+     * @return JsonResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     */
+    public function getProject(Request $request, ProjectService $projectService): JsonResponse
+    {
+        $projectId = $request->get('id');
+
+        $response = [
+            'isError' => false
+        ];
+
+        try {
+            $info = $projectService->getProjectInfo($projectId);
+            $response['data'] = $info;
+        } catch (\Exception $e) {
+            $response['isError'] = true;
+        }
+
+        return new JsonResponse($response);
+    }
 }

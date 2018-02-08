@@ -5,10 +5,12 @@ namespace App\Service;
 
 use App\Entity\City;
 use App\Entity\Project;
+use App\Repository\ProjectRepository;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ProjectService
 {
@@ -79,5 +81,50 @@ class ProjectService
             TODO MORE NICE THINGS
             TODO TODO TODOTODOTODOTODO TODOOOO
         ';
+    }
+
+
+    /**
+     * @param int $id
+     * @param bool $throwException
+     * @return array
+     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     */
+    public function getProjectInfo(int $id, bool $throwException = true): array
+    {
+        /** @var ProjectRepository $projectRepository */
+        $projectRepository = $this->doctrine->getRepository('App:Project');
+        /** @var Project $project */
+        $project = $projectRepository->findOneBy(
+            [
+                'id' => $id
+            ]
+        );
+        if ($project === null && $throwException) {
+            throw new BadRequestHttpException();
+        }
+
+        return $this->formatProjectForResponse($project);
+    }
+
+    private function formatProjectForResponse(Project $project): array
+    {
+        $formattedProject = [
+            'id' => $project->getId(),
+            'title' => $project->getTitle(),
+            'shortDescription' => $project->getShortDescription(),
+            'totalAmount' => $project->getTotalAmount(),
+            'pledgedAmount' => $project->getPledgedAmount(),
+            'cardImage' => $project->getCardImage(),
+            'city' => $project->getCity()->getCounty()->getName(),
+            'expirationDate'=> $project->getExpirationDate()->format('d.m.Y'),
+            'userId' => $project->getUserId(),
+            'link' => $project->getLink(),
+            'presentationMedia' => $project->getPresentationMedia(),
+            'content' => $project->getContent(),
+            'projectTags' => $project->getProjectTags()
+        ];
+
+        return $formattedProject;
     }
 }

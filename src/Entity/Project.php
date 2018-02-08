@@ -113,7 +113,7 @@ class Project
      * @ORM\ManyToMany(targetEntity="App\Entity\ProjectTag", inversedBy="projects")
      * @ORM\JoinTable(name="projects_to_tags")
      */
-    private $projectTags;
+    private $projectTags = [];
 
     /**
      * @return mixed
@@ -172,7 +172,7 @@ class Project
     /**
      * @return int
      */
-    public function getTotalAmount(): int
+    public function getTotalAmount(): ?int
     {
         return $this->totalAmount;
     }
@@ -190,7 +190,7 @@ class Project
     /**
      * @return int
      */
-    public function getPledgedAmount(): int
+    public function getPledgedAmount(): ?int
     {
         return $this->pledgedAmount;
     }
@@ -226,7 +226,7 @@ class Project
     /**
      * @return string
      */
-    public function getPresentationMedia(): string
+    public function getPresentationMedia(): ?string
     {
         return $this->presentationMedia;
     }
@@ -316,7 +316,7 @@ class Project
     /**
      * @return ProjectTag[]
      */
-    public function getProjectTags(): array
+    public function getProjectTags()
     {
         return $this->projectTags;
     }
@@ -354,7 +354,7 @@ class Project
     /**
      * @return string
      */
-    public function getCardImage(): string
+    public function getCardImage(): ?string
     {
         return $this->cardImage;
     }
