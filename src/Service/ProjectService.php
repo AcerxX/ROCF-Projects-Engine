@@ -34,13 +34,15 @@ class ProjectService
         $entityManager = $this->doctrine->getManager();
 
         try {
+            /** @var City $city */
+            $city = $entityManager->getReference('App:City', City::CITY_ID_ALL);
+
             $newProject = (new Project())
                 ->setStatus(Project::STATUS_DRAFT)
-                ->setCity(
-                    $entityManager->getReference('App:City', City::CITY_ID_ALL)
-                )
+                ->setCity($city)
                 ->setExpirationDate(new \DateTime('+2 months'))
                 ->setUserId($userId)
+                ->setLink(UtilsService::generateRandomToken($userId))
                 ->setTitle($this->getDefaultTitle())
                 ->setContent($this->getDefaultContent())
                 ->setShortDescription($this->getDefaultShortDescription());

@@ -74,6 +74,12 @@ class Project
 
     /**
      * @var string
+     * @ORM\Column(type="string", length=32)
+     */
+    private $link;
+
+    /**
+     * @var string
      * @ORM\Column(type="string")
      */
     private $presentationMedia;
@@ -396,6 +402,24 @@ class Project
     public function setExpirationDate(\DateTime $expirationDate): Project
     {
         $this->expirationDate = $expirationDate;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLink(): string
+    {
+        return $this->link;
+    }
+
+    /**
+     * @param string $link
+     * @return Project
+     */
+    public function setLink(string $link): Project
+    {
+        $this->link = $link;
         return $this;
     }
 
