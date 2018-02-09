@@ -149,7 +149,7 @@ class ProjectService
 
     public function updateProjectAttributes(Project $project, ProjectRequestDto $projectRequestDto)
     {
-        
+
     }
 
     /**

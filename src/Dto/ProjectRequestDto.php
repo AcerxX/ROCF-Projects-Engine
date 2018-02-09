@@ -73,6 +73,12 @@ class ProjectRequestDto
     public $link;
 
     /**
+     * @var bool
+     * @JMS\Type("boolean")
+     */
+    public $unsetTotalAmount = false;
+
+    /**
      * @return int
      */
     public function getProjectId(): int
