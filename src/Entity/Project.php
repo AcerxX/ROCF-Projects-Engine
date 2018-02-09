@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
@@ -109,11 +111,17 @@ class Project
     private $modified;
 
     /**
-     * @var ProjectTag[]
+     * @var PersistentCollection
      * @ORM\ManyToMany(targetEntity="App\Entity\ProjectTag", inversedBy="projects")
      * @ORM\JoinTable(name="projects_to_tags")
      */
-    private $projectTags = [];
+    private $projectTags;
+
+    /**
+     * @var PersistentCollection
+     * @ORM\OneToMany(targetEntity="App\Entity\Perk", mappedBy="project")
+     */
+    private $perks;
 
     /**
      * @return mixed
@@ -314,42 +322,42 @@ class Project
     }
 
     /**
-     * @return ProjectTag[]
+     * @return PersistentCollection
      */
-    public function getProjectTags()
+    public function getProjectTags(): PersistentCollection
     {
         return $this->projectTags;
     }
 
     /**
-     * @param ProjectTag[] $projectTags
+     * @param PersistentCollection $projectTags
      * @return Project
      */
-    public function setProjectTags(array $projectTags): Project
+    public function setProjectTags(PersistentCollection $projectTags): Project
     {
         $this->projectTags = $projectTags;
         return $this;
     }
 
     /**
-     * @param ProjectTag $projectTag
+     * @param mixed $projectTag
      */
-    public function addProjectTag(ProjectTag $projectTag): void
+    public function addProjectTag($projectTag): void
     {
-        $this->projectTags[] = $projectTag;
-        $projectTag->addProject($this);
+        $this->projectTags->add($projectTag);
+        $projectTag->setProject($this);
     }
 
     /**
-     * @param ProjectTag $projectTag
+     * @param mixed $projectTag
      */
-    public function removeProjectTag(ProjectTag $projectTag): void
+    public function removeProjectTag($projectTag): void
     {
-        if (false !== $key = array_search($projectTag, $this->projectTags, true)) {
-            array_splice($this->projectTags, $key, 1);
-        }
-        $projectTag->removeProject($this);
+        $this->projectTags->removeElement($projectTag);
+        // uncomment if you want to update other side
+        //$projectTag->setProject(null);
     }
+
 
     /**
      * @return string
@@ -421,6 +429,33 @@ class Project
     {
         $this->link = $link;
         return $this;
+    }
+
+    /**
+     * @return PersistentCollection
+     */
+    public function getPerks(): PersistentCollection
+    {
+        return $this->perks;
+    }
+
+    /**
+     * @param PersistentCollection $perks
+     * @return Project
+     */
+    public function setPerks(PersistentCollection $perks): Project
+    {
+        $this->perks = $perks;
+        return $this;
+    }
+
+    /**
+     * @param mixed $perk
+     */
+    public function addPerk($perk)
+    {
+        $this->perks->add($perk);
+        $perk->setProject($this);
     }
 
 

@@ -19,9 +19,15 @@ class ProjectService
      */
     private $doctrine;
 
-    public function __construct(RegistryInterface $doctrine)
+    /**
+     * @var PerkService
+     */
+    private $perkService;
+
+    public function __construct(RegistryInterface $doctrine, PerkService $perkService)
     {
         $this->doctrine = $doctrine;
+        $this->perkService = $perkService;
     }
 
     /**
@@ -122,8 +128,13 @@ class ProjectService
             'link' => $project->getLink(),
             'presentationMedia' => $project->getPresentationMedia(),
             'content' => $project->getContent(),
-            'projectTags' => $project->getProjectTags()
+            'projectTags' => $project->getProjectTags(),
+            'perks' => []
         ];
+
+        foreach ($project->getPerks() as $perk) {
+            $formattedProject['perks'][] = $this->perkService->formatPerkForResponse($perk);
+        }
 
         return $formattedProject;
     }
