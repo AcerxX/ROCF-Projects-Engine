@@ -3,12 +3,12 @@
 namespace App\Service;
 
 
+use App\Dto\ProjectRequestDto;
 use App\Entity\City;
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\ORMException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -19,22 +19,16 @@ class ProjectService
      */
     private $doctrine;
 
-    /**
-     * @var PerkService
-     */
-    private $perkService;
-
-    public function __construct(RegistryInterface $doctrine, PerkService $perkService)
+    public function __construct(RegistryInterface $doctrine)
     {
         $this->doctrine = $doctrine;
-        $this->perkService = $perkService;
     }
 
     /**
      * @param int $userId
      * @return bool
      */
-    public function addProjectForUser(int $userId): bool
+    public function createProjectForUser(int $userId): bool
     {
         $success = true;
 
@@ -133,9 +127,50 @@ class ProjectService
         ];
 
         foreach ($project->getPerks() as $perk) {
-            $formattedProject['perks'][] = $this->perkService->formatPerkForResponse($perk);
+            $formattedProject['perks'][] = UtilsService::formatPerkForResponse($perk);
         }
 
         return $formattedProject;
+    }
+
+    /**
+     * @param ProjectRequestDto $projectRequestDto
+     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     */
+    public function updateProject(ProjectRequestDto $projectRequestDto)
+    {
+        /** @var EntityManager $entityManager */
+        $entityManager = $this->doctrine->getManager();
+
+        $project = $this->getProjectById($projectRequestDto->getProjectId());
+
+
+    }
+
+    public function updateProjectAttributes(Project $project, ProjectRequestDto $projectRequestDto)
+    {
+        
+    }
+
+    /**
+     * @param int $projectId
+     * @return Project
+     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     */
+    public function getProjectById(int $projectId): Project
+    {
+        /** @var Project|null $project */
+        $project = $this->doctrine->getRepository('App:Project')->findOneBy(
+            [
+                'id' => $projectId,
+                'status' => [Project::STATUS_DRAFT, Project::STATUS_PUBLISHED]
+            ]
+        );
+
+        if ($project === null) {
+            throw new BadRequestHttpException('Project with id ' . $projectId . ' does not exits!');
+        }
+
+        return $project;
     }
 }

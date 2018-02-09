@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Entity\Perk;
+
 class UtilsService
 {
     /**
@@ -19,5 +21,21 @@ class UtilsService
         }
 
         return $token;
+    }
+
+    /**
+     * @param Perk $perk
+     * @return array
+     */
+    public static function formatPerkForResponse(Perk $perk): array
+    {
+        return [
+            'id' => $perk->getId(),
+            'title' => $perk->getTitle(),
+            'amount' => $perk->getAmount(),
+            'description' => $perk->getDescription(),
+            'available_quantity' => $perk->getAvailableQuantity(),
+            'total_quantity' => $perk->getTotalQuantity()
+        ];
     }
 }

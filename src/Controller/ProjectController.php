@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Dto\ProjectRequestDto;
 use App\Service\ProjectService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,14 +15,14 @@ class ProjectController extends Controller
      * @param ProjectService $projectService
      * @return JsonResponse
      */
-    public function addProject(Request $request, ProjectService $projectService): JsonResponse
+    public function createProject(Request $request, ProjectService $projectService): JsonResponse
     {
         $userId = $request->request->get('user_id');
 
         $response = [
             'isError' => false === (
                 $userId !== null
-                && $projectService->addProjectForUser($userId)
+                && $projectService->createProjectForUser($userId)
             )
         ];
 
@@ -34,7 +35,7 @@ class ProjectController extends Controller
      * @return JsonResponse
      * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
      */
-    public function getProject(Request $request, ProjectService $projectService): JsonResponse
+    public function getProjectInfo(Request $request, ProjectService $projectService): JsonResponse
     {
         $projectId = $request->get('id');
 
@@ -50,5 +51,27 @@ class ProjectController extends Controller
         }
 
         return new JsonResponse($response);
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function updateProjectInfo(Request $request)
+    {
+        $jmsSerializer = $this->get('jms_serializer');
+        $projectRequestDto = $jmsSerializer->fromArray(
+            $request->request->all(),
+            ProjectRequestDto::class
+        );
+
+        $response = [
+            'isError' => false
+        ];
+
+        try {
+
+        } catch (\Exception $e) {
+
+        }
     }
 }

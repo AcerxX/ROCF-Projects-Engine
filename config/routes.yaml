@@ -1,17 +1,22 @@
-addProject:
-    path: /add-project
-    controller: App\Controller\ProjectController::addProject
+createProject:
+    path: /create-project
+    controller: App\Controller\ProjectController::createProject
+    methods: [POST]
+
+getProjectInfo:
+    path: /get-project-info
+    controller: App\Controller\ProjectController::getProjectInfo
+    methods: [GET]
+
+updateProjectInfo:
+    path: /update-project-info
+    controller: App\Controller\ProjectController::updateProjectInfo
     methods: [POST]
 
 addPerk:
     path: /add-perk
     controller: App\Controller\PerkController::addPerk
     methods: [POST]
-
-getProject:
-    path: /get-project
-    controller: App\Controller\ProjectController::getProject
-    methods: [GET]
 
 getCategories:
     path: /get-categories

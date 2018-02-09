@@ -18,9 +18,15 @@ class PerkService
      */
     private $doctrine;
 
-    public function __construct(RegistryInterface $doctrine)
+    /**
+     * @var ProjectService
+     */
+    private $projectService;
+
+    public function __construct(RegistryInterface $doctrine, ProjectService $projectService)
     {
         $this->doctrine = $doctrine;
+        $this->projectService = $projectService;
     }
 
     /**
@@ -35,17 +41,6 @@ class PerkService
     {
        /** @var EntityManager $entityManager */
        $entityManager = $this->doctrine->getManager();
-       /** @var Project|null $project */
-       $project = $entityManager->getRepository('App:Project')->findOneBy(
-           [
-               'id' => $perkRequestDto->getProjectId(),
-               'status' => [Project::STATUS_DRAFT, Project::STATUS_PUBLISHED]
-           ]
-       );
-
-       if (false === ($project instanceof Project)) {
-           throw new BadRequestHttpException('Project with id ' . $perkRequestDto->getProjectId() . ' does not exits!');
-       }
 
        $perk = (new Perk())
            ->setTitle($perkRequestDto->getTitle())
@@ -55,27 +50,11 @@ class PerkService
            ->setImagePath($perkRequestDto->getImagePath())
            ->setTotalQuantity($perkRequestDto->getTotalQuantity())
            ->setAvailableQuantity($perkRequestDto->getTotalQuantity())
-           ->setProject($project);
+           ->setProject($this->projectService->getProjectById($perkRequestDto->getProjectId()));
 
        $entityManager->persist($perk);
        $entityManager->flush();
 
-       return $this->formatPerkForResponse($perk);
-   }
-
-    /**
-     * @param Perk $perk
-     * @return array
-     */
-   public function formatPerkForResponse(Perk $perk): array
-   {
-       return [
-           'id' => $perk->getId(),
-           'title' => $perk->getTitle(),
-           'amount' => $perk->getAmount(),
-           'description' => $perk->getDescription(),
-           'available_quantity' => $perk->getAvailableQuantity(),
-           'total_quantity' => $perk->getTotalQuantity()
-       ];
+       return UtilsService::formatPerkForResponse($perk);
    }
 }
