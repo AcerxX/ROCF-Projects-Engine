@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Dto\ProjectRequestDto;
+use App\Dto\UpdateProjectInfoRequestDto;
+use App\Entity\Project;
 use App\Service\ProjectService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -63,7 +64,7 @@ class ProjectController extends Controller
         $jmsSerializer = $this->get('jms_serializer');
         $projectRequestDto = $jmsSerializer->fromArray(
             $request->request->all(),
-            ProjectRequestDto::class
+            UpdateProjectInfoRequestDto::class
         );
 
         $response = [
@@ -74,6 +75,33 @@ class ProjectController extends Controller
             $projectService->updateProject($projectRequestDto);
         } catch (\Exception $e) {
             $response['isError'] = true;
+        }
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \LogicException
+     */
+    public function removeProject(Request $request): JsonResponse
+    {
+        $projectId = $request->request->get('project_id');
+
+        $response = [
+            'isError' => false
+        ];
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $project = $entityManager->getRepository('App:Project')->find($projectId);
+        if ($project === null) {
+            $response['isError'] = true;
+        } else {
+            $project->setStatus(Project::STATUS_DISABLED);
+            $entityManager->persist($project);
+            $entityManager->flush();
         }
 
         return new JsonResponse($response);

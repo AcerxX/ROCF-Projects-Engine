@@ -13,9 +13,24 @@ updateProjectInfo:
     controller: App\Controller\ProjectController::updateProjectInfo
     methods: [POST]
 
+removeProject:
+    path: /remove-project
+    controller: App\Controller\ProjectController::removeProject
+    methods: [POST]
+
 addPerk:
     path: /add-perk
     controller: App\Controller\PerkController::addPerk
+    methods: [POST]
+
+updatePerkInfo:
+    path: /update-perk-info
+    controller: App\Controller\PerkController::updatePerkInfo
+    methods: [POST]
+
+removePerk:
+    path: /remove-perk
+    controller: App\Controller\PerkController::removePerk
     methods: [POST]
 
 getCategories:

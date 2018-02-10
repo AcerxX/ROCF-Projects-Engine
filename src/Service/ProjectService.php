@@ -3,7 +3,7 @@
 namespace App\Service;
 
 
-use App\Dto\ProjectRequestDto;
+use App\Dto\UpdateProjectInfoRequestDto;
 use App\Entity\City;
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
@@ -134,14 +134,14 @@ class ProjectService
     }
 
     /**
-     * @param ProjectRequestDto $projectRequestDto
+     * @param UpdateProjectInfoRequestDto $projectRequestDto
      * @return array
      * @throws \Doctrine\ORM\ORMInvalidArgumentException
      * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function updateProject(ProjectRequestDto $projectRequestDto): array
+    public function updateProject(UpdateProjectInfoRequestDto $projectRequestDto): array
     {
         /** @var EntityManager $entityManager */
         $entityManager = $this->doctrine->getManager();
@@ -157,9 +157,9 @@ class ProjectService
 
     /**
      * @param Project $project
-     * @param ProjectRequestDto $projectRequestDto
+     * @param UpdateProjectInfoRequestDto $projectRequestDto
      */
-    public function updateProjectAttributes(Project $project, ProjectRequestDto $projectRequestDto): void
+    public function updateProjectAttributes(Project $project, UpdateProjectInfoRequestDto $projectRequestDto): void
     {
         if (null !== $projectRequestDto->getTitle()) {
             $project->setTitle($projectRequestDto->getTitle());
@@ -203,15 +203,15 @@ class ProjectService
             $project->setLink($projectRequestDto->getLink());
         }
 
-        if ($projectRequestDto->isUnsetCardImage()) {
+        if ($projectRequestDto->getUnsetCardImage()) {
             $project->setCardImage(null);
         }
 
-        if ($projectRequestDto->isUnsetPresentationMedia()) {
+        if ($projectRequestDto->getUnsetPresentationMedia()) {
             $project->setPresentationMedia(null);
         }
 
-        if ($projectRequestDto->isUnsetTotalAmount()) {
+        if ($projectRequestDto->getUnsetTotalAmount()) {
             $project->setTotalAmount(null);
         }
     }

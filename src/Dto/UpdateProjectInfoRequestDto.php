@@ -4,7 +4,7 @@ namespace App\Dto;
 
 use JMS\Serializer\Annotation as JMS;
 
-class ProjectRequestDto
+class UpdateProjectInfoRequestDto
 {
     /**
      * @var integer
@@ -73,19 +73,19 @@ class ProjectRequestDto
     public $link;
 
     /**
-     * @var bool
+     * @var bool|null
      * @JMS\Type("boolean")
      */
     public $unsetTotalAmount = false;
 
     /**
-     * @var bool
+     * @var bool|null
      * @JMS\Type("boolean")
      */
     public $unsetPresentationMedia = false;
 
     /**
-     * @var bool
+     * @var bool|null
      * @JMS\Type("boolean")
      */
     public $unsetCardImage = false;
@@ -100,63 +100,63 @@ class ProjectRequestDto
 
     /**
      * @param int $projectId
-     * @return ProjectRequestDto
+     * @return UpdateProjectInfoRequestDto
      */
-    public function setProjectId(int $projectId): ProjectRequestDto
+    public function setProjectId(int $projectId): UpdateProjectInfoRequestDto
     {
         $this->projectId = $projectId;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
     /**
-     * @param string $title
-     * @return ProjectRequestDto
+     * @param null|string $title
+     * @return UpdateProjectInfoRequestDto
      */
-    public function setTitle(string $title): ProjectRequestDto
+    public function setTitle(?string $title): UpdateProjectInfoRequestDto
     {
         $this->title = $title;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getShortDescription(): string
+    public function getShortDescription(): ?string
     {
         return $this->shortDescription;
     }
 
     /**
-     * @param string $shortDescription
-     * @return ProjectRequestDto
+     * @param null|string $shortDescription
+     * @return UpdateProjectInfoRequestDto
      */
-    public function setShortDescription(string $shortDescription): ProjectRequestDto
+    public function setShortDescription(?string $shortDescription): UpdateProjectInfoRequestDto
     {
         $this->shortDescription = $shortDescription;
         return $this;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getPledgedAmount(): int
+    public function getPledgedAmount(): ?int
     {
         return $this->pledgedAmount;
     }
 
     /**
-     * @param int $pledgedAmount
-     * @return ProjectRequestDto
+     * @param int|null $pledgedAmount
+     * @return UpdateProjectInfoRequestDto
      */
-    public function setPledgedAmount(int $pledgedAmount): ProjectRequestDto
+    public function setPledgedAmount(?int $pledgedAmount): UpdateProjectInfoRequestDto
     {
         $this->pledgedAmount = $pledgedAmount;
         return $this;
@@ -172,9 +172,9 @@ class ProjectRequestDto
 
     /**
      * @param int|null $totalAmount
-     * @return ProjectRequestDto
+     * @return UpdateProjectInfoRequestDto
      */
-    public function setTotalAmount(?int $totalAmount): ProjectRequestDto
+    public function setTotalAmount(?int $totalAmount): UpdateProjectInfoRequestDto
     {
         $this->totalAmount = $totalAmount;
         return $this;
@@ -190,45 +190,45 @@ class ProjectRequestDto
 
     /**
      * @param null|string $presentationMedia
-     * @return ProjectRequestDto
+     * @return UpdateProjectInfoRequestDto
      */
-    public function setPresentationMedia(?string $presentationMedia): ProjectRequestDto
+    public function setPresentationMedia(?string $presentationMedia): UpdateProjectInfoRequestDto
     {
         $this->presentationMedia = $presentationMedia;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getContent(): string
+    public function getContent(): ?string
     {
         return $this->content;
     }
 
     /**
-     * @param string $content
-     * @return ProjectRequestDto
+     * @param null|string $content
+     * @return UpdateProjectInfoRequestDto
      */
-    public function setContent(string $content): ProjectRequestDto
+    public function setContent(?string $content): UpdateProjectInfoRequestDto
     {
         $this->content = $content;
         return $this;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getCityId(): int
+    public function getCityId(): ?int
     {
         return $this->cityId;
     }
 
     /**
-     * @param int $cityId
-     * @return ProjectRequestDto
+     * @param int|null $cityId
+     * @return UpdateProjectInfoRequestDto
      */
-    public function setCityId(int $cityId): ProjectRequestDto
+    public function setCityId(?int $cityId): UpdateProjectInfoRequestDto
     {
         $this->cityId = $cityId;
         return $this;
@@ -244,99 +244,99 @@ class ProjectRequestDto
 
     /**
      * @param null|string $cardImage
-     * @return ProjectRequestDto
+     * @return UpdateProjectInfoRequestDto
      */
-    public function setCardImage(?string $cardImage): ProjectRequestDto
+    public function setCardImage(?string $cardImage): UpdateProjectInfoRequestDto
     {
         $this->cardImage = $cardImage;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getExpirationDate(): string
+    public function getExpirationDate(): ?string
     {
         return $this->expirationDate;
     }
 
     /**
-     * @param string $expirationDate
-     * @return ProjectRequestDto
+     * @param null|string $expirationDate
+     * @return UpdateProjectInfoRequestDto
      */
-    public function setExpirationDate(string $expirationDate): ProjectRequestDto
+    public function setExpirationDate(?string $expirationDate): UpdateProjectInfoRequestDto
     {
         $this->expirationDate = $expirationDate;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getLink(): string
+    public function getLink(): ?string
     {
         return $this->link;
     }
 
     /**
-     * @param string $link
-     * @return ProjectRequestDto
+     * @param null|string $link
+     * @return UpdateProjectInfoRequestDto
      */
-    public function setLink(string $link): ProjectRequestDto
+    public function setLink(?string $link): UpdateProjectInfoRequestDto
     {
         $this->link = $link;
         return $this;
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isUnsetTotalAmount(): bool
+    public function getUnsetTotalAmount(): ?bool
     {
         return $this->unsetTotalAmount;
     }
 
     /**
-     * @param bool $unsetTotalAmount
-     * @return ProjectRequestDto
+     * @param bool|null $unsetTotalAmount
+     * @return UpdateProjectInfoRequestDto
      */
-    public function setUnsetTotalAmount(bool $unsetTotalAmount): ProjectRequestDto
+    public function setUnsetTotalAmount(?bool $unsetTotalAmount): UpdateProjectInfoRequestDto
     {
         $this->unsetTotalAmount = $unsetTotalAmount;
         return $this;
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isUnsetPresentationMedia(): bool
+    public function getUnsetPresentationMedia(): ?bool
     {
         return $this->unsetPresentationMedia;
     }
 
     /**
-     * @param bool $unsetPresentationMedia
-     * @return ProjectRequestDto
+     * @param bool|null $unsetPresentationMedia
+     * @return UpdateProjectInfoRequestDto
      */
-    public function setUnsetPresentationMedia(bool $unsetPresentationMedia): ProjectRequestDto
+    public function setUnsetPresentationMedia(?bool $unsetPresentationMedia): UpdateProjectInfoRequestDto
     {
         $this->unsetPresentationMedia = $unsetPresentationMedia;
         return $this;
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isUnsetCardImage(): bool
+    public function getUnsetCardImage(): ?bool
     {
         return $this->unsetCardImage;
     }
 
     /**
-     * @param bool $unsetCardImage
-     * @return ProjectRequestDto
+     * @param bool|null $unsetCardImage
+     * @return UpdateProjectInfoRequestDto
      */
-    public function setUnsetCardImage(bool $unsetCardImage): ProjectRequestDto
+    public function setUnsetCardImage(?bool $unsetCardImage): UpdateProjectInfoRequestDto
     {
         $this->unsetCardImage = $unsetCardImage;
         return $this;
