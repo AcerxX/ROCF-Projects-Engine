@@ -186,10 +186,10 @@ class Project
     }
 
     /**
-     * @param int $totalAmount
+     * @param int|null $totalAmount
      * @return Project
      */
-    public function setTotalAmount(int $totalAmount): Project
+    public function setTotalAmount(?int $totalAmount): Project
     {
         $this->totalAmount = $totalAmount;
         return $this;
@@ -198,7 +198,7 @@ class Project
     /**
      * @return int
      */
-    public function getPledgedAmount(): ?int
+    public function getPledgedAmount(): int
     {
         return $this->pledgedAmount;
     }
@@ -240,10 +240,10 @@ class Project
     }
 
     /**
-     * @param string $presentationMedia
+     * @param string|null $presentationMedia
      * @return Project
      */
-    public function setPresentationMedia(string $presentationMedia): Project
+    public function setPresentationMedia(?string $presentationMedia): Project
     {
         $this->presentationMedia = $presentationMedia;
         return $this;
@@ -368,10 +368,10 @@ class Project
     }
 
     /**
-     * @param string $cardImage
+     * @param string|null $cardImage
      * @return Project
      */
-    public function setCardImage(string $cardImage): Project
+    public function setCardImage(?string $cardImage): Project
     {
         $this->cardImage = $cardImage;
         return $this;

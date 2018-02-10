@@ -55,8 +55,10 @@ class ProjectController extends Controller
 
     /**
      * @param Request $request
+     * @param ProjectService $projectService
+     * @return JsonResponse
      */
-    public function updateProjectInfo(Request $request)
+    public function updateProjectInfo(Request $request, ProjectService $projectService): JsonResponse
     {
         $jmsSerializer = $this->get('jms_serializer');
         $projectRequestDto = $jmsSerializer->fromArray(
@@ -69,9 +71,11 @@ class ProjectController extends Controller
         ];
 
         try {
-
+            $projectService->updateProject($projectRequestDto);
         } catch (\Exception $e) {
-
+            $response['isError'] = true;
         }
+
+        return new JsonResponse($response);
     }
 }

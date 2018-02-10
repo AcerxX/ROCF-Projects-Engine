@@ -135,21 +135,85 @@ class ProjectService
 
     /**
      * @param ProjectRequestDto $projectRequestDto
+     * @return array
+     * @throws \Doctrine\ORM\ORMInvalidArgumentException
      * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function updateProject(ProjectRequestDto $projectRequestDto)
+    public function updateProject(ProjectRequestDto $projectRequestDto): array
     {
         /** @var EntityManager $entityManager */
         $entityManager = $this->doctrine->getManager();
 
         $project = $this->getProjectById($projectRequestDto->getProjectId());
+        $this->updateProjectAttributes($project, $projectRequestDto);
 
+        $entityManager->persist($project);
+        $entityManager->flush();
 
+        return $this->formatProjectForResponse($project);
     }
 
-    public function updateProjectAttributes(Project $project, ProjectRequestDto $projectRequestDto)
+    /**
+     * @param Project $project
+     * @param ProjectRequestDto $projectRequestDto
+     */
+    public function updateProjectAttributes(Project $project, ProjectRequestDto $projectRequestDto): void
     {
+        if (null !== $projectRequestDto->getTitle()) {
+            $project->setTitle($projectRequestDto->getTitle());
+        }
 
+        if (null !== $projectRequestDto->getShortDescription()) {
+            $project->setShortDescription($projectRequestDto->getShortDescription());
+        }
+
+        if (null !== $projectRequestDto->getTotalAmount()) {
+            $project->setTotalAmount($projectRequestDto->getTotalAmount());
+        }
+
+        if (null !== $projectRequestDto->getPresentationMedia()) {
+            $project->setPresentationMedia($projectRequestDto->getPresentationMedia());
+        }
+
+        if (null !== $projectRequestDto->getContent()) {
+            $project->setContent($projectRequestDto->getContent());
+        }
+
+        if (null !== $projectRequestDto->getCityId()) {
+            $project->setCity(
+                $this->doctrine
+                    ->getRepository('App:City')
+                    ->find($projectRequestDto->getTitle())
+            );
+        }
+
+        if (null !== $projectRequestDto->getCardImage()) {
+            $project->setCardImage($projectRequestDto->getCardImage());
+        }
+
+        if (null !== $projectRequestDto->getExpirationDate()) {
+            $project->setExpirationDate(
+                \DateTime::createFromFormat($projectRequestDto->getExpirationDate(), 'd.m.Y')
+            );
+        }
+
+        if (null !== $projectRequestDto->getLink()) {
+            $project->setLink($projectRequestDto->getLink());
+        }
+
+        if ($projectRequestDto->isUnsetCardImage()) {
+            $project->setCardImage(null);
+        }
+
+        if ($projectRequestDto->isUnsetPresentationMedia()) {
+            $project->setPresentationMedia(null);
+        }
+
+        if ($projectRequestDto->isUnsetTotalAmount()) {
+            $project->setTotalAmount(null);
+        }
     }
 
     /**

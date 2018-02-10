@@ -79,6 +79,18 @@ class ProjectRequestDto
     public $unsetTotalAmount = false;
 
     /**
+     * @var bool
+     * @JMS\Type("boolean")
+     */
+    public $unsetPresentationMedia = false;
+
+    /**
+     * @var bool
+     * @JMS\Type("boolean")
+     */
+    public $unsetCardImage = false;
+
+    /**
      * @return int
      */
     public function getProjectId(): int
@@ -273,6 +285,60 @@ class ProjectRequestDto
     public function setLink(string $link): ProjectRequestDto
     {
         $this->link = $link;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUnsetTotalAmount(): bool
+    {
+        return $this->unsetTotalAmount;
+    }
+
+    /**
+     * @param bool $unsetTotalAmount
+     * @return ProjectRequestDto
+     */
+    public function setUnsetTotalAmount(bool $unsetTotalAmount): ProjectRequestDto
+    {
+        $this->unsetTotalAmount = $unsetTotalAmount;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUnsetPresentationMedia(): bool
+    {
+        return $this->unsetPresentationMedia;
+    }
+
+    /**
+     * @param bool $unsetPresentationMedia
+     * @return ProjectRequestDto
+     */
+    public function setUnsetPresentationMedia(bool $unsetPresentationMedia): ProjectRequestDto
+    {
+        $this->unsetPresentationMedia = $unsetPresentationMedia;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUnsetCardImage(): bool
+    {
+        return $this->unsetCardImage;
+    }
+
+    /**
+     * @param bool $unsetCardImage
+     * @return ProjectRequestDto
+     */
+    public function setUnsetCardImage(bool $unsetCardImage): ProjectRequestDto
+    {
+        $this->unsetCardImage = $unsetCardImage;
         return $this;
     }
 }
