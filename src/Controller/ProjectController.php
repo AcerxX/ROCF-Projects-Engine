@@ -18,14 +18,21 @@ class ProjectController extends Controller
      */
     public function createProject(Request $request, ProjectService $projectService): JsonResponse
     {
+        $response = [
+            'isError' => false
+        ];
+
         $userId = $request->request->get('user_id');
 
-        $response = [
-            'isError' => false === (
-                $userId !== null
-                && $projectService->createProjectForUser($userId)
-            )
-        ];
+        if ($userId === null) {
+            $response['isError'] = true;
+        } else {
+            try {
+                $response['data'] = $projectService->createProjectForUser($userId);
+            } catch (\Exception $e) {
+                $response['isError'] = true;
+            }
+        }
 
         return new JsonResponse($response);
     }

@@ -26,36 +26,33 @@ class ProjectService
 
     /**
      * @param int $userId
-     * @return bool
+     * @return array
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\ORMInvalidArgumentException
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function createProjectForUser(int $userId): bool
+    public function createProjectForUser(int $userId): array
     {
-        $success = true;
-
         /** @var EntityManager $entityManager */
         $entityManager = $this->doctrine->getManager();
 
-        try {
-            /** @var City $city */
-            $city = $entityManager->getReference('App:City', City::CITY_ID_ALL);
+        /** @var City $city */
+        $city = $entityManager->getReference('App:City', City::CITY_ID_ALL);
 
-            $newProject = (new Project())
-                ->setStatus(Project::STATUS_DRAFT)
-                ->setCity($city)
-                ->setExpirationDate(new \DateTime('+2 months'))
-                ->setUserId($userId)
-                ->setLink(UtilsService::generateRandomToken($userId))
-                ->setTitle($this->getDefaultTitle())
-                ->setContent($this->getDefaultContent())
-                ->setShortDescription($this->getDefaultShortDescription());
+        $newProject = (new Project())
+            ->setStatus(Project::STATUS_DRAFT)
+            ->setCity($city)
+            ->setExpirationDate(new \DateTime('+2 months'))
+            ->setUserId($userId)
+            ->setLink(UtilsService::generateRandomToken($userId))
+            ->setTitle($this->getDefaultTitle())
+            ->setContent($this->getDefaultContent())
+            ->setShortDescription($this->getDefaultShortDescription());
 
-            $entityManager->persist($newProject);
-            $entityManager->flush();
-        } catch (\Exception $e) {
-            $success = false;
-        }
+        $entityManager->persist($newProject);
+        $entityManager->flush();
 
-        return $success;
+        return $this->formatProjectForResponse($newProject);
     }
 
     private function getDefaultTitle(): string
@@ -117,7 +114,7 @@ class ProjectService
             'pledgedAmount' => $project->getPledgedAmount(),
             'cardImage' => $project->getCardImage(),
             'city' => $project->getCity()->getCounty()->getName(),
-            'expirationDate'=> $project->getExpirationDate()->format('d.m.Y'),
+            'expirationDate' => $project->getExpirationDate()->format('d.m.Y'),
             'userId' => $project->getUserId(),
             'link' => $project->getLink(),
             'presentationMedia' => $project->getPresentationMedia(),
