@@ -427,7 +427,7 @@ class Project
      */
     public function setLink(string $link): Project
     {
-        $this->link = $link;
+        $this->link = strtolower($link);
         return $this;
     }
 
