@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Perk;
+use App\Entity\ProjectTag;
 
 class UtilsService
 {
@@ -36,6 +37,14 @@ class UtilsService
             'description' => $perk->getDescription(),
             'available_quantity' => $perk->getAvailableQuantity(),
             'total_quantity' => $perk->getTotalQuantity()
+        ];
+    }
+
+    public static function formatTagForResponse(ProjectTag $tag):array
+    {
+        return [
+            'id' => $tag->getId(),
+            'tag' => $tag->getTag()
         ];
     }
 }

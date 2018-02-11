@@ -6,7 +6,7 @@ createProject:
 getProjectInfo:
     path: /get-project-info
     controller: App\Controller\ProjectController::getProjectInfo
-    methods: [GET]
+    methods: [POST]
 
 updateProjectInfo:
     path: /update-project-info

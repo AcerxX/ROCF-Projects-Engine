@@ -322,9 +322,9 @@ class Project
     }
 
     /**
-     * @return PersistentCollection
+     * @return PersistentCollection|null
      */
-    public function getProjectTags(): PersistentCollection
+    public function getProjectTags(): ?PersistentCollection
     {
         return $this->projectTags;
     }
@@ -432,9 +432,9 @@ class Project
     }
 
     /**
-     * @return PersistentCollection
+     * @return PersistentCollection|null
      */
-    public function getPerks(): PersistentCollection
+    public function getPerks(): ?PersistentCollection
     {
         return $this->perks;
     }
@@ -452,7 +452,7 @@ class Project
     /**
      * @param mixed $perk
      */
-    public function addPerk($perk)
+    public function addPerk($perk): void
     {
         $this->perks->add($perk);
         $perk->setProject($this);

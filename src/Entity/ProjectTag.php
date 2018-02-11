@@ -11,6 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ProjectTag
 {
+    public const STATUS_ENABLED = 1;
+    public const STATUS_DISABLED = 0;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

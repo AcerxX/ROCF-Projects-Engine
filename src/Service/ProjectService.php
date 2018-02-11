@@ -5,7 +5,9 @@ namespace App\Service;
 
 use App\Dto\UpdateProjectInfoRequestDto;
 use App\Entity\City;
+use App\Entity\Perk;
 use App\Entity\Project;
+use App\Entity\ProjectTag;
 use App\Repository\ProjectRepository;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
@@ -119,12 +121,27 @@ class ProjectService
             'link' => $project->getLink(),
             'presentationMedia' => $project->getPresentationMedia(),
             'content' => $project->getContent(),
-            'projectTags' => $project->getProjectTags(),
+            'projectTags' => [],
             'perks' => []
         ];
 
-        foreach ($project->getPerks() as $perk) {
-            $formattedProject['perks'][] = UtilsService::formatPerkForResponse($perk);
+
+        if ($project->getPerks() !== null) {
+            /** @var Perk $perk */
+            foreach ($project->getPerks() as $perk) {
+                if ($perk->getStatus() === Perk::STATUS_ENABLED) {
+                    $formattedProject['perks'][] = UtilsService::formatPerkForResponse($perk);
+                }
+            }
+        }
+
+        if ($project->getProjectTags() !== null) {
+            /** @var ProjectTag $tag */
+            foreach ($project->getProjectTags() as $tag) {
+                if ($tag->getStatus() === ProjectTag::STATUS_ENABLED) {
+                    $formattedProject['projectTags'][] = UtilsService::formatTagForResponse($tag);
+                }
+            }
         }
 
         return $formattedProject;
