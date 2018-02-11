@@ -59,22 +59,22 @@ class ProjectService
 
     private function getDefaultTitle(): string
     {
-        return 'Click here to set a title...';
+        return 'Click aici pentru a seta un titlu...';
     }
 
     private function getDefaultShortDescription(): string
     {
-        return 'Click here to set a short description. It should not be larger than 1 sentence.';
+        return 'Click aici pentru a seta o scurta descriere. Aceasta nu ar trebui sa fie mai lunga de o propozitie.';
     }
 
     private function getDefaultContent(): string
     {
-        return '[Click here to set your content]
+        return '[Click aici pentru a seta continutul proiectului]
         
-            You can use the toolbar on the right to create beautiful content.
+            Poti folosi instrumentele de pe bara din dreapta pentru a crea continut spectaculos.
             TODO MORE INSTRUCTIONS.
             
-            In order to have a good content please be sure you talk about the following topics:
+            Pentru a te asigura ca ai un continut bun, asigura-te ca atingi urmatoarele subiecte in descrierea ta:
             TODO LIST
             
             TODO MORE NICE THINGS
