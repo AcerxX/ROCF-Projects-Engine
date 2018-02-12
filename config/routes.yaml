@@ -33,6 +33,11 @@ removePerk:
     controller: App\Controller\PerkController::removePerk
     methods: [POST]
 
+getPerksInfo:
+    path: /get-perks-info
+    controller: App\Controller\PerkController::getPerksInfo
+    methods: [POST]
+
 getCategories:
     path: /get-categories
     controller: App\Controller\CategoryController::getCategories

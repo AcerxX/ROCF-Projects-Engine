@@ -5,7 +5,10 @@ namespace App\Controller;
 use App\Dto\PerkRequestDto;
 use App\Dto\UpdatePerkInfoRequestDto;
 use App\Entity\Perk;
+use App\Entity\Project;
+use App\Entity\ProjectTag;
 use App\Service\PerkService;
+use App\Service\UtilsService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -91,7 +94,7 @@ class PerkController extends Controller
         ];
 
         try {
-            $perkService->updatePerk($projectRequestDto);
+            $response['data'] = $perkService->updatePerk($projectRequestDto);
         } catch (\Exception $e) {
             $response['isError'] = true;
         }
@@ -99,4 +102,37 @@ class PerkController extends Controller
         return new JsonResponse($response);
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getPerksInfo(Request $request): JsonResponse
+    {
+        $projectId = $request->request->get('project_id');
+
+        if ($projectId === null) {
+            $response = [
+                'isError' => true,
+                'errorMessage' => 'A aparut o eroare. Va rugam reincercati!'
+            ];
+        } else {
+
+            /** @var Project $project */
+            $project = $this->getDoctrine()->getRepository('App:Project')->find($projectId);
+
+            if ($project === null) {
+                $response = [
+                    'isError' => true,
+                    'errorMessage' => 'Nu a fost gasit niciun proiect cu id-ul ' . $projectId
+                ];
+            } else {
+                $response = [
+                    'isError' => true,
+                    'data' => UtilsService::formatAllPerksForResponse($project->getPerks())
+                ];
+            }
+        }
+
+        return new JsonResponse($response);
+    }
 }

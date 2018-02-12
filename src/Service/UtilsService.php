@@ -40,6 +40,21 @@ class UtilsService
         ];
     }
 
+    /**
+     * @param Perk[] $perks
+     * @return array
+     */
+    public static function formatAllPerksForResponse($perks): array
+    {
+        $response = [];
+
+        foreach ($perks as $perk) {
+            $response[] = self::formatPerkForResponse($perk);
+        }
+
+        return $response;
+    }
+
     public static function formatTagForResponse(ProjectTag $tag):array
     {
         return [
