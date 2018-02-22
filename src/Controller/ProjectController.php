@@ -81,7 +81,8 @@ class ProjectController extends Controller
         try {
             $projectService->updateProject($projectRequestDto);
         } catch (\Exception $e) {
-            $response['isError'] = true;
+
+            $response['isError'] = $e->getMessage();
         }
 
         return new JsonResponse($response);
