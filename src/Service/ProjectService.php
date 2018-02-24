@@ -69,17 +69,34 @@ class ProjectService
 
     private function getDefaultContent(): string
     {
-        return '[Click aici pentru a seta continutul proiectului]
-        
-            Poti folosi instrumentele de pe bara din dreapta pentru a crea continut spectaculos.
-            TODO MORE INSTRUCTIONS.
-            
-            Pentru a te asigura ca ai un continut bun, asigura-te ca atingi urmatoarele subiecte in descrierea ta:
-            TODO LIST
-            
-            TODO MORE NICE THINGS
-            TODO TODO TODOTODOTODOTODO TODOOOO
-        ';
+        return '<section>
+            <div class="row">
+                <div class="col-md-12" data-type="container-content">
+                    <section data-type="component-text">
+                        <div class="page-header">
+                            <h1 style="margin-bottom: 30px; font-size: 50px;">Click aici pentru a seta continutul proiectului</h1>
+    
+                            <p class="lead">Poti folosi instrumentele de pe bara din dreapta pentru a crea continut spectaculos.</p>
+    
+                            <p class="lead">Pentru a te asigura ca ai un continut bun, asigura-te ca atingi urmatoarele subiecte in descrierea ta:</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="row">
+                <div class="col-md-12" data-type="container-content">
+                    <section data-type="component-text">
+                        <ul>
+	                        <li>TODO LIST</li>
+	                        <li>TODO MORE NICE THINGS</li>
+	                        <li>TODO TODO TODOTODOTODOTODO TODOOOO</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </section>';
     }
 
 
