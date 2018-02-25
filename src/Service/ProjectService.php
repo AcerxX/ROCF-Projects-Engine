@@ -73,7 +73,7 @@ class ProjectService
             <div class="row">
                 <div class="col-md-12" data-type="container-content">
                     <section data-type="component-text">
-                        <div class="page-header">
+                        <div class="page-header-2">
                             <h1 style="margin-bottom: 30px; font-size: 50px;">Click aici pentru a seta continutul proiectului</h1>
     
                             <p class="lead">Poti folosi instrumentele de pe bara din dreapta pentru a crea continut spectaculos.</p>
