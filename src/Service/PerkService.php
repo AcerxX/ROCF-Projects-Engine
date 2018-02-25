@@ -56,7 +56,7 @@ class PerkService
        $entityManager->persist($perk);
        $entityManager->flush();
 
-       return UtilsService::formatAllPerksForResponse($perk->getProject()->getPerks());
+       return UtilsService::formatPerkForResponse($perk);
    }
 
     /**
