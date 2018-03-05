@@ -226,7 +226,7 @@ class ProjectService
 
         if (null !== $projectRequestDto->getExpirationDate()) {
             $project->setExpirationDate(
-                \DateTime::createFromFormat($projectRequestDto->getExpirationDate(), 'd.m.Y')
+                \DateTime::createFromFormat('Y-m-d', $projectRequestDto->getExpirationDate())
             );
         }
 
