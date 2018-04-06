@@ -4,6 +4,7 @@ namespace App\Service;
 
 
 use App\Dto\PerkRequestDto;
+use App\Dto\UpdatePerkInfoRequestDataDto;
 use App\Dto\UpdatePerkInfoRequestDto;
 use App\Entity\Perk;
 use App\Entity\Project;
@@ -62,13 +63,10 @@ class PerkService
     /**
      * @param UpdatePerkInfoRequestDto $perkInfoRequestDto
      * @return array
-     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
-     * @throws \Doctrine\ORM\ORMInvalidArgumentException
      * @throws \RuntimeException
      * @throws \Doctrine\DBAL\DBALException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \Exception
      */
     public function updatePerk(UpdatePerkInfoRequestDto $perkInfoRequestDto): array
     {
@@ -76,25 +74,26 @@ class PerkService
         $entityManager = $this->doctrine->getManager();
         $perkRepository = $entityManager->getRepository('App:Perk');
 
-        $perkRepository->aquireNamedLock('perk_' . $perkInfoRequestDto->getPerkId());
+        foreach ($perkInfoRequestDto->getData() as $perkInfoRequestDataDto) {
+            $perkRepository->aquireNamedLock('perk_' . $perkInfoRequestDataDto->getPerkId());
+            $perk = $this->getPerkById($perkInfoRequestDataDto->getPerkId());
+            $this->updatePerkAttributes($perk, $perkInfoRequestDataDto);
 
-        $perk = $this->getPerkById($perkInfoRequestDto->getPerkId());
-        $this->updatePerkAttributes($perk, $perkInfoRequestDto);
+            $entityManager->persist($perk);
+            $entityManager->flush();
 
-        $entityManager->persist($perk);
-        $entityManager->flush();
-
-        $perkRepository->releaseNamedLock('perk_' . $perkInfoRequestDto->getPerkId());
+            $perkRepository->releaseNamedLock('perk_' . $perkInfoRequestDataDto->getPerkId());
+        }
 
         return UtilsService::formatAllPerksForResponse($perk->getProject()->getPerks());
     }
 
     /**
      * @param Perk $perk
-     * @param UpdatePerkInfoRequestDto $perkInfoRequestDto
+     * @param UpdatePerkInfoRequestDataDto $perkInfoRequestDto
      * @throws \RuntimeException
      */
-    public function updatePerkAttributes(Perk $perk, UpdatePerkInfoRequestDto $perkInfoRequestDto): void
+    public function updatePerkAttributes(Perk $perk, UpdatePerkInfoRequestDataDto $perkInfoRequestDto): void
     {
         if (null !== $perkInfoRequestDto->getTitle()) {
             $perk->setTitle($perkInfoRequestDto->getTitle());

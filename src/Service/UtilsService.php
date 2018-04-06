@@ -36,7 +36,8 @@ class UtilsService
             'amount' => $perk->getAmount(),
             'description' => $perk->getDescription(),
             'available_quantity' => $perk->getAvailableQuantity(),
-            'total_quantity' => $perk->getTotalQuantity()
+            'total_quantity' => $perk->getTotalQuantity(),
+            'image_path'=> $perk->getImagePath()
         ];
     }
 

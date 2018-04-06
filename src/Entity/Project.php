@@ -432,7 +432,7 @@ class Project
     }
 
     /**
-     * @return PersistentCollection|null
+     * @return Perk[]|PersistentCollection|null
      */
     public function getPerks(): ?PersistentCollection
     {

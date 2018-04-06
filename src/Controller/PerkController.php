@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Dto\PerkRequestDto;
+use App\Dto\UpdatePerkInfoRequestDataDto;
 use App\Dto\UpdatePerkInfoRequestDto;
 use App\Entity\Perk;
 use App\Entity\Project;

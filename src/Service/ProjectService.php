@@ -49,7 +49,8 @@ class ProjectService
             ->setLink(UtilsService::generateRandomToken($userId))
             ->setTitle($this->getDefaultTitle())
             ->setContent($this->getDefaultContent())
-            ->setShortDescription($this->getDefaultShortDescription());
+            ->setShortDescription($this->getDefaultShortDescription())
+            ->setPresentationMedia('https://www.youtube.com/embed/tpy3pWye5Rg');
 
         $entityManager->persist($newProject);
         $entityManager->flush();
