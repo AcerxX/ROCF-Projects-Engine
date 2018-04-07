@@ -40,7 +40,7 @@ class PerkRequestDto
      * @var string|null
      * @JMS\Type("string")
      */
-    public $imagePath = 'http://images.roprojects.test/perk_default.jpg';
+    public $imagePath;
 
     /**
      * @return int

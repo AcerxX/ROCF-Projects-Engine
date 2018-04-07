@@ -25,10 +25,19 @@ class PerkService
      */
     private $projectService;
 
-    public function __construct(RegistryInterface $doctrine, ProjectService $projectService)
-    {
+    /**
+     * @var string
+     */
+    private $imagesHost;
+
+    public function __construct(
+        string $imagesHost,
+        RegistryInterface $doctrine,
+        ProjectService $projectService
+    ) {
         $this->doctrine = $doctrine;
         $this->projectService = $projectService;
+        $this->imagesHost = $imagesHost;
     }
 
     /**
@@ -53,6 +62,10 @@ class PerkService
            ->setTotalQuantity($perkRequestDto->getTotalQuantity())
            ->setAvailableQuantity($perkRequestDto->getTotalQuantity())
            ->setProject($this->projectService->getProjectById($perkRequestDto->getProjectId()));
+
+       if ($perk->getImagePath() === null) {
+           $perk->setImagePath('http://'. $this->imagesHost . '/perk_default.jpg');
+       }
 
        $entityManager->persist($perk);
        $entityManager->flush();
