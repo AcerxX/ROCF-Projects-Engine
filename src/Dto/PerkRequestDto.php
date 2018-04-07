@@ -40,7 +40,7 @@ class PerkRequestDto
      * @var string|null
      * @JMS\Type("string")
      */
-    public $imagePath;
+    public $imagePath = 'https://thumb9.shutterstock.com/display_pic_with_logo/3475769/327209306/stock-photo-perk-word-crowd-from-above-327209306.jpg';
 
     /**
      * @return int
