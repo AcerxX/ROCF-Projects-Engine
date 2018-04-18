@@ -42,3 +42,9 @@ getCategories:
     path: /get-categories
     controller: App\Controller\CategoryController::getCategories
     methods: [GET]
+
+getProjectsListing:
+    path: /get-projects-listing
+    controller: App\Controller\ProjectController::getProjectsListing
+    methods: [POST]
+

@@ -3,6 +3,7 @@
 namespace App\Service;
 
 
+use App\Dto\ProjectsListingRequestDto;
 use App\Dto\UpdateProjectInfoRequestDto;
 use App\Entity\City;
 use App\Entity\Perk;
@@ -268,5 +269,13 @@ class ProjectService
         }
 
         return $project;
+    }
+
+    public function getProjectsForListing(ProjectsListingRequestDto $projectsListingRequestDto)
+    {
+        $projectsRepository = $this->doctrine->getRepository('App:Project');
+        $projects = $projectsRepository->getProjectsForListing($projectsListingRequestDto);
+
+        return $projects;
     }
 }
