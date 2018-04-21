@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Dto\ProjectsListingRequestDto;
 use App\Dto\UpdateProjectInfoRequestDto;
 use App\Entity\Project;
 use App\Service\ProjectService;
@@ -57,6 +58,33 @@ class ProjectController extends Controller
             $response['data'] = $info;
         } catch (\Exception $e) {
             $response['isError'] = true;
+        }
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @param Request $request
+     * @param ProjectService $projectService
+     * @return JsonResponse
+     */
+    public function getProjectsListing(Request $request, ProjectService $projectService): JsonResponse
+    {
+        $jmsSerializer = $this->get('jms_serializer');
+        $projectsListingRequestDto = $jmsSerializer->fromArray(
+            $request->request->all(),
+            ProjectsListingRequestDto::class
+        );
+
+        $response = [
+            'isError' => false
+        ];
+
+        try {
+            $response['data'] = $projectService->getProjectsForListing($projectsListingRequestDto);
+        } catch (\Exception $e) {
+            $response['isError'] = true;
+            $response['errorMessage'] = $e->getMessage();
         }
 
         return new JsonResponse($response);
