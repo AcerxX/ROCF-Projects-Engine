@@ -31,6 +31,7 @@ class ProjectController extends Controller
                 $response['data'] = $projectService->createProjectForUser($userId);
             } catch (\Exception $e) {
                 $response['isError'] = true;
+                $response['errorMessage'] = $e->getMessage();
             }
         }
 
