@@ -5,6 +5,7 @@ namespace App\Service;
 
 use App\Dto\ProjectsListingRequestDto;
 use App\Dto\UpdateProjectInfoRequestDto;
+use App\Entity\Category;
 use App\Entity\City;
 use App\Entity\Perk;
 use App\Entity\Project;
@@ -41,6 +42,8 @@ class ProjectService
 
         /** @var City $city */
         $city = $entityManager->getReference('App:City', City::CITY_ID_ALL);
+        /** @var Category $undefinedCategory */
+        $undefinedCategory = $entityManager->getReference('App:Category', Category::ID_UNDEFINED);
 
         $newProject = (new Project())
             ->setStatus(Project::STATUS_DRAFT)
@@ -51,7 +54,8 @@ class ProjectService
             ->setTitle($this->getDefaultTitle())
             ->setContent($this->getDefaultContent())
             ->setShortDescription($this->getDefaultShortDescription())
-            ->setPresentationMedia('https://www.youtube.com/embed/tpy3pWye5Rg');
+            ->setPresentationMedia('https://www.youtube.com/embed/tpy3pWye5Rg')
+            ->setCategory($undefinedCategory);
 
         $entityManager->persist($newProject);
         $entityManager->flush();
@@ -129,6 +133,8 @@ class ProjectService
     {
         $formattedProject = [
             'id' => $project->getId(),
+            'category_id' => $project->getCategory()->getId(),
+            'category_name' => $project->getCategory()->getNameRo(),
             'title' => $project->getTitle(),
             'shortDescription' => $project->getShortDescription(),
             'totalAmount' => $project->getTotalAmount(),
@@ -194,6 +200,12 @@ class ProjectService
      */
     public function updateProjectAttributes(Project $project, UpdateProjectInfoRequestDto $projectRequestDto): void
     {
+        if (null !== $projectRequestDto->getCategoryId()) {
+            $project->setCategory(
+                $this->doctrine->getManager()->getReference('App:Category', $projectRequestDto->getCategoryId())
+            );
+        }
+
         if (null !== $projectRequestDto->getTitle()) {
             $project->setTitle($projectRequestDto->getTitle());
         }

@@ -13,6 +13,8 @@ class Category
     public const STATUS_DISABLED = 0;
     public const STATUS_ENABLED = 1;
 
+    public const ID_UNDEFINED = 9;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -55,6 +57,12 @@ class Category
      * @ORM\Column(type="datetime")
      */
     private $modified;
+
+    /**
+     * @var Project[]
+     * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="category")
+     */
+    private $projects = [];
 
     /**
      * @return mixed
@@ -181,4 +189,41 @@ class Category
         $this->modified = $modified;
         return $this;
     }
+
+    /**
+     * @return Project[]
+     */
+    public function getProjects(): array
+    {
+        return $this->projects;
+    }
+
+    /**
+     * @param Project[] $projects
+     * @return Category
+     */
+    public function setProjects(array $projects): Category
+    {
+        $this->projects = $projects;
+        return $this;
+    }
+
+    /**
+     * @param Project $project
+     */
+    public function addProject(Project $project)
+    {
+        $this->projects[] = $project;
+    }
+
+    /**
+     * @param Project $project
+     */
+    public function removeProject(Project $project)
+    {
+        if (false !== $key = array_search($project, $this->projects, true)) {
+            array_splice($this->projects, $key, 1);
+        }
+    }
+
 }

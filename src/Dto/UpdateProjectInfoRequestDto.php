@@ -13,6 +13,12 @@ class UpdateProjectInfoRequestDto
     public $projectId;
 
     /**
+     * @var integer
+     * @JMS\Type("integer")
+     */
+    public $categoryId;
+
+    /**
      * @var string|null
      * @JMS\Type("string")
      */
@@ -339,6 +345,24 @@ class UpdateProjectInfoRequestDto
     public function setUnsetCardImage(?bool $unsetCardImage): UpdateProjectInfoRequestDto
     {
         $this->unsetCardImage = $unsetCardImage;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCategoryId(): ?int
+    {
+        return $this->categoryId;
+    }
+
+    /**
+     * @param int $categoryId
+     * @return UpdateProjectInfoRequestDto
+     */
+    public function setCategoryId(int $categoryId): UpdateProjectInfoRequestDto
+    {
+        $this->categoryId = $categoryId;
         return $this;
     }
 }

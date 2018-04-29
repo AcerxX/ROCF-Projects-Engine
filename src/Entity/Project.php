@@ -25,6 +25,14 @@ class Project
     private $id;
 
     /**
+     * @var Category
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="projects")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    private $category;
+
+    /**
      * @var string
      * @ORM\Column(type="string", length=100)
      */
@@ -456,6 +464,24 @@ class Project
     {
         $this->perks->add($perk);
         $perk->setProject($this);
+    }
+
+    /**
+     * @return Category
+     */
+    public function getCategory(): Category
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param Category $category
+     * @return Project
+     */
+    public function setCategory(Category $category): Project
+    {
+        $this->category = $category;
+        return $this;
     }
 
 
