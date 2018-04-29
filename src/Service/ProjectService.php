@@ -274,7 +274,10 @@ class ProjectService
     public function getProjectsForListing(ProjectsListingRequestDto $projectsListingRequestDto)
     {
         $projectsRepository = $this->doctrine->getRepository('App:Project');
-        $projects = $projectsRepository->getProjectsForListing($projectsListingRequestDto);
+        $projects = [];
+
+        $projects['Proiecte recomandate'] = $projectsRepository->getRecommendedProjectsForListing($projectsListingRequestDto);
+        $projects['Proiecte deja finantate'] = $projectsRepository->getCompletedProjectsForListing($projectsListingRequestDto);
 
         return $projects;
     }

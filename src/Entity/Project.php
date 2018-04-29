@@ -40,7 +40,7 @@ class Project
      * @var int
      * @ORM\Column(type="integer")
      */
-    private $totalAmount;
+    private $totalAmount = 500;
 
     /**
      * @var int
@@ -52,7 +52,7 @@ class Project
      * @var string
      * @ORM\Column(type="string")
      */
-    private $cardImage;
+    private $cardImage = 'http://www.erpnews.com/wp-content/uploads/2018/04/project-based-ERP-600.jpg   ';
 
     /**
      * @var City
