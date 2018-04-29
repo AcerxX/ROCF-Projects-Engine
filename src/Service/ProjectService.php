@@ -288,8 +288,15 @@ class ProjectService
         $projectsRepository = $this->doctrine->getRepository('App:Project');
         $projects = [];
 
-        $projects['Proiecte recomandate'] = $projectsRepository->getRecommendedProjectsForListing($projectsListingRequestDto);
-        $projects['Proiecte deja finantate'] = $projectsRepository->getCompletedProjectsForListing($projectsListingRequestDto);
+        if ($projectsListingRequestDto->getCategoryId() !== null
+            || $projectsListingRequestDto->getSearchedText() !== null
+        ) {
+            $projects['Rezultatele cautarii'] = $projectsRepository->getSearchedProjectsForListing($projectsListingRequestDto);
+        } else {
+            $projects['Proiecte recomandate'] = $projectsRepository->getRecommendedProjectsForListing($projectsListingRequestDto);
+            $projects['Proiecte deja finantate'] = $projectsRepository->getCompletedProjectsForListing($projectsListingRequestDto);
+        }
+
 
         return $projects;
     }

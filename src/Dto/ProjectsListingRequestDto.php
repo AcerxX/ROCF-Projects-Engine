@@ -10,19 +10,25 @@ class ProjectsListingRequestDto
      * @var integer|null
      * @JMS\Type("integer")
      */
-    public $userId;
+    private $userId;
 
     /**
      * @var integer|null
      * @JMS\Type("integer")
      */
-    public $categoryId;
+    private $categoryId;
 
     /**
      * @var integer|null
      * @JMS\Type("integer")
      */
-    public $location;
+    private $location;
+
+    /**
+     * @var string|null
+     * @JMS\Type("string")
+     */
+    private $searchedText;
 
     /**
      * @return int|null
@@ -75,6 +81,24 @@ class ProjectsListingRequestDto
     public function setLocation(?int $location): ProjectsListingRequestDto
     {
         $this->location = $location;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getSearchedText(): ?string
+    {
+        return $this->searchedText;
+    }
+
+    /**
+     * @param null|string $searchedText
+     * @return ProjectsListingRequestDto
+     */
+    public function setSearchedText(?string $searchedText): ProjectsListingRequestDto
+    {
+        $this->searchedText = $searchedText;
         return $this;
     }
 }
